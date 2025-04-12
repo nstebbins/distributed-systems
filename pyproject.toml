@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "distributed-systems"
+version = "0.1.0"
+description = "Implementation of distributed systems concepts including Lamport logical clocks"
+authors = ["Noah Stebbins"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+rich = "^14.0.0"
+pytest = "^8.3.5"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.11.5"
+pytest-asyncio = "^0.26.0"
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "B", "UP", "C"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["distributed_systems"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
