@@ -1,13 +1,17 @@
-# Distributed Systems - Lamport Clocks
+# Distributed Systems - Logical Clocks
 
-This package provides an implementation of Lamport logical clocks for distributed systems, with a focus on visualization and easy testing.
+This package provides implementations of logical clocks for distributed systems:
+- Lamport Clocks: Simple scalar timestamps for partial ordering of events
+- Vector Clocks: Vector timestamps for capturing causality and detecting concurrent events
 
 ## Features
 
-- Implementation of Lamport logical clocks
+- Implementation of Lamport and Vector logical clocks
 - Beautiful terminal-based visualization of message passing
 - Comprehensive test suite
 - Easy-to-use API for distributed system simulation
+- Detection of concurrent events (Vector Clocks)
+- Causal ordering of events
 
 ## Installation
 
@@ -27,7 +31,7 @@ poetry install
 
 ## Usage
 
-Here's a simple example of how to use the Lamport clock implementation:
+### Lamport Clocks
 
 ```python
 from distributed_systems.core.lamport_clock import DistributedSystem
@@ -46,9 +50,38 @@ system.send_message("P1", "P2", "Hello!")
 system.display_all_histories()
 ```
 
-To run the example:
+### Vector Clocks
+
+```python
+from distributed_systems.core.vector_clock import DistributedSystemVC
+
+# Create a distributed system
+system = DistributedSystemVC()
+
+# Create processes
+system.create_process("P1")
+system.create_process("P2")
+
+# Send messages between processes
+system.send_message("P1", "P2", "Hello!")
+
+# Check for concurrent events
+p1_state = system.processes["P1"].vector_timestamp
+p2_state = system.processes["P2"].vector_timestamp
+if p1_state.concurrent_with(p2_state):
+    print("Events are concurrent!")
+
+# Display message history for all processes
+system.display_all_histories()
+```
+
+To run the examples:
 ```bash
+# Lamport clock example
 poetry run python examples/lamport_example.py
+
+# Vector clock example
+poetry run python examples/vector_clock_example.py
 ```
 
 ## Running Tests

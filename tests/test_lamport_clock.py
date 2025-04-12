@@ -60,14 +60,14 @@ def test_distributed_system():
     system.create_process("P3")
 
     # Send messages between processes
-    system.send_message("P1", "P2", "Message 1")
-    system.send_message("P2", "P3", "Message 2")
-    system.send_message("P3", "P1", "Message 3")
+    system.send_message("P1", "P2", "Message 1")  # P1: 1, P2: 2
+    system.send_message("P2", "P3", "Message 2")  # P2: 3, P3: 4
+    system.send_message("P3", "P1", "Message 3")  # P3: 5, P1: 6
 
     # Verify timestamps
-    assert system.processes["P1"].timestamp == 2  # Sent 1, Received 1
-    assert system.processes["P2"].timestamp == 2  # Received 1, Sent 1
-    assert system.processes["P3"].timestamp == 3  # Received 1, Sent 1
+    assert system.processes["P1"].timestamp == 6  # Initial 0 -> Send 1 -> Receive 6
+    assert system.processes["P2"].timestamp == 3  # Initial 0 -> Receive 2 -> Send 3
+    assert system.processes["P3"].timestamp == 5  # Initial 0 -> Receive 4 -> Send 5
 
 
 def test_duplicate_process_creation():
